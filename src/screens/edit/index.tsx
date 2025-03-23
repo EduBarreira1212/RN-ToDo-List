@@ -6,13 +6,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 type EditScreenProps = StackScreenProps<RootStackParamList, 'Edit'>;
 
-const EditScreen: React.FC<EditScreenProps> = ({ route, navigation }) => {
-  const { itemId } = route.params;
-
+const EditScreen: React.FC<EditScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <Text>Details Screen</Text>
-      <Text>Item ID: {itemId}</Text>
+      <Text>Edit Screen</Text>
       <Button title="Go back" onPress={() => navigation.goBack()} />
     </SafeAreaView>
   );
