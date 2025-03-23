@@ -1,12 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    mainContainer: {
-        width: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+    container: { 
+        flex: 1, 
+        backgroundColor: '#d6d7ef' 
+    },
+    flatListContent: {
+        flex: 1,
+        padding: 7,
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     }
 });
 
