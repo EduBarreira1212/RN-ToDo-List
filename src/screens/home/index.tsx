@@ -12,8 +12,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <SafeAreaView style={styles.mainContainer}>
       <Text>To Do</Text>
       <View>
-        <Button title="Show completed" onPress={() => navigation.navigate('Edit', { itemId: 1 })} />
-        <Button title="Create new" onPress={() => navigation.navigate('Edit', { itemId: 1 })} />
+        <Button title="Show completed" onPress={() => navigation.navigate('Edit')} />
+        <Button title="Create new" onPress={() => navigation.navigate('Edit')} />
       </View>
     </SafeAreaView>
   );
