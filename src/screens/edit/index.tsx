@@ -2,19 +2,20 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-type DetailsScreenProps = StackScreenProps<RootStackParamList, 'Details'>;
+type EditScreenProps = StackScreenProps<RootStackParamList, 'Edit'>;
 
-const DetailsScreen: React.FC<DetailsScreenProps> = ({ route, navigation }) => {
+const EditScreen: React.FC<EditScreenProps> = ({ route, navigation }) => {
   const { itemId } = route.params;
 
   return (
-    <View>
+    <SafeAreaView>
       <Text>Details Screen</Text>
       <Text>Item ID: {itemId}</Text>
       <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default DetailsScreen;
+export default EditScreen;
