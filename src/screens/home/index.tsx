@@ -6,11 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
 import EmptyList from './components/EmptyList';
 import ItemList from './components/ItemList';
+import useToDoList from '../../hooks/useToDoList';
 
 type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [showCompletedItems, setShowCompletedItems] = useState(false);
+
+  const { items, completedItems, completeItem, removeItem } = useToDoList();
 
   const handleShowCompletedItems = () => {
     setShowCompletedItems(!setShowCompletedItems);
@@ -20,21 +23,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     navigation.navigate('Add');
   };
 
-  const toDoList: ToDo[] = [
-    {
-      name: 'to do 1',
-      done: false,
-    },
-    {
-      name: 'to do 2',
-      done: true,
-    },
-    {
-      name: 'to do 3',
-      done: false,
-    },
-  ];
-
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -43,9 +31,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         ListEmptyComponent={EmptyList}
         ItemSeparatorComponent={() => <View style={{ height: 21 }} />}
         ListFooterComponent={() => <View style={{ height: 21 }} />}
-        data={showCompletedItems ? toDoList.filter((toDo) => toDo.done) : toDoList}
+        data={showCompletedItems ? completedItems : items}
         renderItem={({ item, index }) => {
-          return <ItemList index={index} item={item} />;
+          return (
+            <ItemList
+              index={index}
+              item={item}
+              completeItemPress={completeItem}
+              removeItemPress={removeItem}
+            />
+          );
         }}
       />
       <View style={styles.buttonsContainer}>
