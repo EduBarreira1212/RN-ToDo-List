@@ -1,16 +1,43 @@
-import React from 'react';
-import { Button, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Button, Text, TextInput, View } from 'react-native';
 import { RootStackParamList } from '../../types';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useToDoList from '../../hooks/useToDoList';
 
 type AddScreenProps = StackScreenProps<RootStackParamList, 'Add'>;
 
 const AddScreen: React.FC<AddScreenProps> = ({ navigation }) => {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
+  const { addItem } = useToDoList();
+
+  const handleEdit = () => {
+    if (!name || !description) {
+      Alert.alert('Error', 'All fields are obrigatory');
+
+      return;
+    }
+
+    addItem({
+      name: name,
+      description: description,
+    });
+
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView>
-      <Text>Add Screen</Text>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <View>
+        <TextInput value={name} onChangeText={setName} placeholder="Name" />
+        <TextInput value={description} onChangeText={setDescription} placeholder="Description" />
+      </View>
+      <View>
+        <Button title="Save" onPress={handleEdit} />
+        <Button title="Cancel" onPress={navigation.goBack} />
+      </View>
     </SafeAreaView>
   );
 };
