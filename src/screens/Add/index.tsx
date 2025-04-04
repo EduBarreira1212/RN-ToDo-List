@@ -4,6 +4,7 @@ import { RootStackParamList } from '../../types';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useToDoList from '../../hooks/useToDoList';
+import styles from './styles';
 
 type AddScreenProps = StackScreenProps<RootStackParamList, 'Add'>;
 
@@ -29,12 +30,17 @@ const AddScreen: React.FC<AddScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
-      <View>
-        <TextInput value={name} onChangeText={setName} placeholder="Name" />
-        <TextInput value={description} onChangeText={setDescription} placeholder="Description" />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Name" />
+        <TextInput
+          style={styles.input}
+          value={description}
+          onChangeText={setDescription}
+          placeholder="Description"
+        />
       </View>
-      <View>
+      <View style={styles.buttonsContainer}>
         <Button title="Save" onPress={handleEdit} />
         <Button title="Cancel" onPress={navigation.goBack} />
       </View>
