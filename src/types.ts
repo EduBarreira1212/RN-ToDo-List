@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Home: undefined;
-  Edit: undefined;
+  Edit: {item: ToDo; index: number};
   Add: undefined;
 };
 
