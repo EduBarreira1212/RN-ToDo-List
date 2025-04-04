@@ -16,7 +16,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { items, completedItems, completeItem, removeItem } = useToDoList();
 
   const handleShowCompletedItems = () => {
-    setShowCompletedItems(!setShowCompletedItems);
+    setShowCompletedItems(!showCompletedItems);
   };
 
   const handleAdd = () => {
