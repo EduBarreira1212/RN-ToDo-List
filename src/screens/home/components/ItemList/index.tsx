@@ -23,7 +23,7 @@ const ItemList = ({ item, index, completeItemPress, removeItemPress }: ItemListP
   const navigation = useNavigation<NavigationProp>();
 
   const handleClickEdit = () => {
-    navigation.navigate('Edit');
+    navigation.navigate('Edit', { index, item });
   };
 
   return (
