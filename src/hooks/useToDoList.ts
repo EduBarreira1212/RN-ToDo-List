@@ -75,6 +75,19 @@ const useToDoList = () => {
         return oldState;
       });
     };
+
+    const editItem = (index: number, newContent: ToDo) => {
+      setItems((s) => {
+        const oldState = [...s];
+  
+        oldState[index] = {
+          ...oldState[index],
+          ...newContent,
+        };
+  
+        return oldState;
+      });
+    };
   
     const removeItem = (index: number) => {
       setItems((s) => {
@@ -91,6 +104,7 @@ const useToDoList = () => {
         completedItems,
         addItem,
         completeItem,
+        editItem,
         removeItem,
       };
     };
