@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import atoms from "../atoms";
 import { ToDo } from "../types";
+import asyncStorage, { keys } from "../asyncStorage";
 
 type AddItemParameters = {
     name: string;
@@ -11,6 +12,14 @@ const useToDoList = () => {
     const [items, setItems] = useAtom(atoms.items);
   
     const [completedItems, setCompletedItems] = useAtom(atoms.completedItems);
+
+    const saveItemsOnAsyncStorage = (data: ToDo[]) => {
+      asyncStorage.saveData(keys.items, data);
+    };
+  
+    const saveCompletedItemsOnAsyncStorage = (data: ToDo[]) => {
+      asyncStorage.saveData(keys.completedItems, data);
+    };
   
     const addItem = ({ name, description }: AddItemParameters) => {
       setItems((s) => {
@@ -23,6 +32,8 @@ const useToDoList = () => {
         const oldState = [...s];
   
         oldState.push(newItem);
+
+        saveItemsOnAsyncStorage(oldState);
   
         return oldState;
       });
@@ -39,6 +50,8 @@ const useToDoList = () => {
           };
   
           oldState.push(itemToAdd);
+
+          saveItemsOnAsyncStorage(oldState);
   
           return oldState;
         });
@@ -47,6 +60,8 @@ const useToDoList = () => {
           const oldState = [...s];
   
           oldState.splice(index, 1);
+
+          saveCompletedItemsOnAsyncStorage(oldState);
   
           return oldState;
         });
@@ -58,6 +73,8 @@ const useToDoList = () => {
         const oldState = [...s];
   
         oldState.splice(index, 1);
+
+        saveItemsOnAsyncStorage(oldState);
   
         return oldState;
       });
@@ -71,6 +88,8 @@ const useToDoList = () => {
         };
   
         oldState.push(itemToAdd);
+
+        saveCompletedItemsOnAsyncStorage(oldState);
   
         return oldState;
       });
@@ -95,8 +114,24 @@ const useToDoList = () => {
   
         oldState.splice(index, 1);
 
+        saveItemsOnAsyncStorage(oldState);
+
         return oldState;
       });
+    };
+
+    const loadLocalData = async () => {
+      const localItems = await asyncStorage.loadData(keys.items);
+  
+      if (localItems) {
+        setItems(localItems);
+      }
+  
+      const localCompletedItems = await asyncStorage.loadData(keys.completedItems);
+  
+      if (localCompletedItems) {
+        setCompletedItems(localCompletedItems);
+      }
     };
 
     return {
@@ -106,6 +141,7 @@ const useToDoList = () => {
         completeItem,
         editItem,
         removeItem,
+        loadLocalData
       };
     };
     
